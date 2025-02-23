@@ -1,0 +1,173 @@
+{% extends "base.html" %}
+
+{% block title %} Admin Dashboard {% endblock %}
+
+{% block head %}
+    <style>
+        /* General Page Styling */
+        body {
+            background-color: #7b5ea7; /* Darker Lavender-Purple Mix */
+            color: white;
+            font-family: 'Poppins', sans-serif;
+            text-align: center;
+        }
+
+
+        /* Admin Dashboard Container */
+        .dashboard-container {
+            background: linear-gradient(135deg, #f8cdda, #e8a5bd); /* Soft Pink Gradient */
+            color: #4a235a; /* Dark Purple for contrast */
+            border-radius: 15px;
+            box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.2);
+            width: 80%;
+            max-width: 900px;
+            margin: 100px auto;
+            padding: 40px;
+            margin-top: 230px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #ff69b4; /* Hot Pink */
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        h2 {
+            margin-top: 20px;
+            font-size: 1.8rem;
+            color: #6d1b7b; /* Dark Purple */
+        }
+
+        /* Add Pet Button */
+        .add-pet {
+            display: inline-block;
+            background-color: #ff4081; /* Bright Pink */
+            color: white;
+            text-decoration: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .add-pet:hover {
+            background-color: #d81b60;
+            text-decoration: underline;
+        }
+
+        /* Pet List Styling */
+        .pet-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+            padding: 0;
+            list-style: none; /* Removes bullet points */
+        }
+
+        .pet-card {
+            background: rgba(255, 255, 255, 0.3);
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            width: 280px;
+            text-align: center;
+            transition: transform 0.3s ease-in-out;
+            backdrop-filter: blur(10px);
+        }
+
+        .pet-card:hover {
+            transform: scale(1.05);
+        }
+
+        .pet-card img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+
+        .pet-card strong {
+            font-size: 1.2rem;
+            color: #4a235a; /* Dark Purple */
+        }
+
+        .pet-card p {
+            font-size: 0.9rem;
+            color: #6d1b7b; /* Deep Lavender */
+            margin: 5px 0;
+        }
+
+        /* Delete Button */
+        .delete-button {
+            background-color: #d32f2f;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: background 0.3s ease-in-out;
+        }
+
+        .delete-button:hover {
+            background-color: #b71c1c;
+        }
+
+        /* Navigation Link */
+        .nav-link {
+            display: inline-block;
+            margin-top: 20px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #4a235a;
+            text-decoration: none;
+            transition: all 0.3s ease-in-out;
+            position: relative;
+        }
+
+        .nav-link::after {
+            content: "";
+            display: block;
+            width: 0;
+            height: 2px;
+            background: #4a235a;
+            transition: width 0.3s;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+    </style>
+{% endblock %}
+
+{% block main_block %}
+<div class="dashboard-container">
+    <h1>Admin Dashboard</h1>
+    <a href="{{ url_for('add_pet') }}" class="add-pet">Add New Pet</a>
+
+    <h2>All Pets</h2>
+    <ul class="pet-list">
+        {% for pet in pets %}
+        <li class="pet-card">
+            <img src="{{ pet.image_url }}" alt="{{ pet.name }}">
+            <strong>{{ pet.name }}</strong>
+            <p>Breed: {{ pet.breed }}</p>
+            <p>Age: {{ pet.age }}</p>
+            <p>Distance: {{ pet.distance }} km</p>
+            <p>Category: {{ pet.category }}</p>
+            <form method="POST" action="{{ url_for('delete_pet', pet_id=pet.id) }}">
+                <button type="submit" class="delete-button">Delete</button>
+            </form>
+        </li>
+        {% endfor %}
+    </ul>
+
+    <br>
+    <a href="{{ url_for('home') }}" class="nav-link">Go to Home</a>
+</div>
+{% endblock %}
