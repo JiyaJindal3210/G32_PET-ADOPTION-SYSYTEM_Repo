@@ -345,21 +345,25 @@ def remove_from_cart(cart_id):
     flash('Item removed from cart.', 'success')
     return redirect(url_for('cart'))
 
-@app.route('/adopt_pet/<int:pet_id>/<int:cart_id>', methods=['POST'])
+@app.route('/adopt_all_pets', methods=['POST'])
 @login_required
-def adopt_pet(pet_id, cart_id):
-    pet = Pet.query.get_or_404(pet_id)
-    item = Cart.query.get_or_404(cart_id)
+def adopt_all_pets():
+    cart_items = Cart.query.filter_by(user_id=current_user.id).all()
 
-    if item.user_id != current_user.id:
-        flash("You can't adopt this pet!", 'danger')
+    if not cart_items:
+        flash("Your cart is empty!", "warning")
         return redirect(url_for('cart'))
 
-    db.session.delete(item)  # Remove from cart
-    db.session.delete(pet)   # Remove from pets list (adopted)
+    adopted_names = []
+    for item in cart_items:
+        if item.pet:
+            adopted_names.append(item.pet.name)
+            db.session.delete(item.pet)  # Remove pet from database
+        db.session.delete(item)  # Remove cart item
+
     db.session.commit()
 
-    flash(f'Congratulations! You have adopted {pet.name}.', 'success')
+    flash(f"Congratulations! You have adopted: {', '.join(adopted_names)}", "success")
     return redirect(url_for('cart'))
 
 if __name__ == '__main__':

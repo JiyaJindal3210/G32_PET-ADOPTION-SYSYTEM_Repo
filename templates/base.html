@@ -44,7 +44,7 @@
         .ContactUs,
         .AboutUs,
         .login,
-        .register,.Dashboard6, .logout6, .cart6, .admin6{
+        .register,.Dashboard6, .logout6, .cart6{
             border: none;
             outline: none;
             padding: 6px;
@@ -65,7 +65,7 @@
         .ContactUs a,
         .AboutUs a,
         .login a,
-        .register a, .Dashboard6 a, .logout6 a, .cart6 a, .admin6 a{
+        .register a, .Dashboard6 a, .logout6 a, .cart6 a{
             color: #911693;
             text-decoration: none;
         }
@@ -74,7 +74,7 @@
         .ContactUs:hover,
         .AboutUs:hover,
         .login:hover,
-        .register:hover, .Dashboard6:hover, .logout6:hover, .cart6:hover, .admin6:hover {
+        .register:hover, .Dashboard6:hover, .logout6:hover, .cart6:hover {
             font-size: large;
         }
 
@@ -260,7 +260,7 @@
             font-size: 16px;
             font-weight: bold;
             margin-bottom: 10px;
-            color: #E5C0D1;
+            color: #954bfc;
         }
 
         .footer-column a {
@@ -275,14 +275,6 @@
             text-decoration: underline;
         }
 
-        .newsletter-box {
-            background-color: #f3e6f7;
-            padding: 20px;
-            border-radius: 10px;
-            color: #5c0d8a;
-            text-align: center;
-            max-width: 300px;
-        }
 
         .signup-btn {
             background-color: #5c0d8a;
@@ -332,9 +324,7 @@
             font-size: larger;
         }
 
-        .newsletter-box p {
-            color: #3E043B;
-        }
+        
     </style>
 
     {% block head %} {% endblock %}
@@ -353,10 +343,10 @@
 
         </div>
         <div class="dropdown-container">
-            <div class="allAbout">
+            <!-- <div class="allAbout">
                 <a href="#">All About Animals</a>
             </div>
-            <label for="dropdown-toggle" class="dropdown-label">▼</label>
+            <label for="dropdown-toggle" class="dropdown-label">▼</label> -->
             <input type="checkbox" id="dropdown-toggle">
             <div class="dropdown-menu">
                 <div class="option">ADOPT OR GET INVOLVED
@@ -384,7 +374,7 @@
                         <div class="sub-option">
                             <a href="{{url_for('behaviordog')}}">DOG BEHAVIOR</a>
                         </div>
-                        <div class="sub-option">OTHER DOG INFORMATION</div>
+                        
                     </div>
 
                 </div>
@@ -399,7 +389,7 @@
                         <div class="sub-option">
                             <a href="{{url_for('behaviorcat')}}">CAT BEHAVIOR</a>
                         </div>
-                        <div class="sub-option">OTHER CAT INFORMATION</div>
+                        
                     </div>
 
                 </div>
@@ -416,7 +406,7 @@
 
 
         <div class="ContactUs">
-            <a href="{{url_for('contact')}}">Contact Us</a>
+            <a href="{{url_for('contact')}}"><i class="fa-solid fa-phone fa-lg"></i>Contact Us</a>
         </div>
         <div class="AboutUs">
             <a href="{{url_for('aboutus')}}">About Us</a>
@@ -428,14 +418,14 @@
     <div class="Dashboard6">
         <a href="{{url_for('profile')}}">Profile</a>
     </div>
-    <div class="logout6">
-        <a href="{{url_for('logout')}}">Logout</a>
-    </div>
     <div class="cart6">
-        <a href="{{url_for('cart')}}">Cart</a>
+        <a href="{{url_for('cart')}}"><i class="fa-solid fa-cart-shopping fa-lg"></i>   Cart</a>
     </div>
-    <div class="admin6">
+    <!-- <div class="admin6">
         <a href="{{url_for('admin_dashboard')}}">Admin</a>
+    </div> -->
+    <div class="logout6">
+        <a href="{{url_for('logout')}}"><i class="fa-solid fa-right-from-bracket fa-lg"></i>  Logout</a>
     </div>
 
 
@@ -571,10 +561,7 @@
                 <a href="#">Other Cat Information</a>
             </div>
 
-            <div class="newsletter-box">
-                <p>To get the latest on pet adoption and pet care, sign up for the Petfinder newsletter.</p>
-                <a href="{{url_for('signup')}}"><button class="signup-btn">SIGN UP</button></a>
-            </div>
+            
         </div>
 
         <br><br>
