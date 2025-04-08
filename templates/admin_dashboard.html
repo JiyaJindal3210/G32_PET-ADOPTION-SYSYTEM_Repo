@@ -6,7 +6,7 @@
     <style>
         /* General Page Styling */
         body {
-            background-color: #7b5ea7; /* Darker Lavender-Purple Mix */
+            background-color: #6a23d5; /* Darker Lavender-Purple Mix */
             color: white;
             font-family: 'Poppins', sans-serif;
             text-align: center;
@@ -68,7 +68,7 @@
             list-style: none; /* Removes bullet points */
         }
 
-        .pet-card {
+        .pet-card12 {
             background: rgba(255, 255, 255, 0.3);
             padding: 20px;
             border-radius: 12px;
@@ -79,11 +79,11 @@
             backdrop-filter: blur(10px);
         }
 
-        .pet-card:hover {
+        .pet-card12:hover {
             transform: scale(1.05);
         }
 
-        .pet-card img {
+        .pet-card12 img {
             width: 100%;
             height: 180px;
             object-fit: cover;
@@ -91,12 +91,12 @@
             margin-bottom: 10px;
         }
 
-        .pet-card strong {
+        .pet-card12 strong {
             font-size: 1.2rem;
             color: #4a235a; /* Dark Purple */
         }
 
-        .pet-card p {
+        .pet-card12 p {
             font-size: 0.9rem;
             color: #6d1b7b; /* Deep Lavender */
             margin: 5px 0;
@@ -153,7 +153,7 @@
     <h2>All Pets</h2>
     <ul class="pet-list">
         {% for pet in pets %}
-        <li class="pet-card">
+        <li class="pet-card12">
             <img src="{{ pet.image_url }}" alt="{{ pet.name }}">
             <strong>{{ pet.name }}</strong>
             <p>Breed: {{ pet.breed }}</p>
