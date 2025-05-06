@@ -41,8 +41,9 @@ body{
 .allAbout,
 .ContactUs,
 .AboutUs,
-.login,
-.register {
+.login6,
+.register6,
+.signup6 , .orders6 {
     border: none;
     outline: none;
     padding: 6px;
@@ -62,8 +63,8 @@ body{
 .allAbout a,
 .ContactUs a,
 .AboutUs a,
-.login a,
-.register a {
+.login6 a,
+.register6 a,.signup6 a ,.orders6 a {
     color: #911693;
     text-decoration: none;
 }
@@ -71,8 +72,8 @@ body{
 .allAbout:hover,
 .ContactUs:hover,
 .AboutUs:hover,
-.login:hover,
-.register:hover {
+.login6:hover,
+.register6:hover,.signup6:hover , .orders6:hover{
     font-size: large;
 }
 
@@ -261,6 +262,7 @@ body {
 .i1 img{
     margin-left: 0px;
     margin-right:0px;
+    margin-top: 150px;
     width: 480px;
     height: 350px;
 }
@@ -548,9 +550,10 @@ body {
     height: 590px;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 20px;
+    gap: 420px;
     padding: 20px;
     background-color: #f5f5f5;
+    
 }
 
 .container3 .card {
@@ -561,6 +564,7 @@ body {
     text-align: center;
     height: 520px;
     margin: 20px;
+    margin-left: 2px;
 }
 
 .card>img {
@@ -635,8 +639,8 @@ body {
 }
 
 .i3 img{
-    margin-left: 0px;
-    margin-right:0px;
+    /* margin-left: 0px;
+    margin-right:0px; */
     width: 780px;
     height: 400px;
 }
@@ -648,7 +652,7 @@ body {
     padding: 20px;
     bottom: 0px;
     font-family: Arial, sans-serif;
-    margin-top: 100px;
+    margin-top: 1000px;
     
 }
 
@@ -658,6 +662,7 @@ body {
     justify-content: center;
     background-color: red;
     padding: 5px;
+    margin-top: 1800px;
 }
 
 .top-bar img {

@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %} About FluffyTails {% endblock %}
+{% block title_block %} About FluffyTails {% endblock %}
 
 {% block head %}
 <style>
@@ -17,12 +17,12 @@
         padding: 0;
         background-color: white;
         text-align: center;
-        background-color:#3e0950;
+        background-color:#632a75;
         color: white;
     }
 
     .container {
-        margin-top: 180px;
+        margin-top: 50px;
         width: 80%;
         padding: 50px 0;
     }
@@ -152,7 +152,7 @@
             Join us in giving pets the love they deserve and creating life-long memories. Together, we’re changing
             lives—one adoption at a time.</p>
     </div>
-    <a href="#" class="cta-btn">Find Your Pet Now!</a><br><br><br><br>
+    <a href="{{ url_for('dogs') }}" class="cta-btn">Find Your Pet Now!</a><br><br><br><br>
 
     <div class="image-container">
         <img src="https://i.pinimg.com/236x/9a/06/48/9a0648bceeaf921f89a9c9e1df1ed215.jpg" width="500px" height="300px">
