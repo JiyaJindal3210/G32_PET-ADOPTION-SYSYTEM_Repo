@@ -69,7 +69,6 @@ class User(db.Model, UserMixin):
 
 
 
-# Many-to-many association table between Pet and Breed with ForeignKey constraints
 pet_breed = Table('pet_breed', db.Model.metadata,
     Column('pet_id', Integer, ForeignKey('pet.id', ondelete='CASCADE'), primary_key=True),
     Column('breed_id', Integer, ForeignKey('breeds.id', ondelete='CASCADE'), primary_key=True)
@@ -84,7 +83,6 @@ class Pet(db.Model):
     image = db.Column(db.String, nullable=True)
     type = db.Column(db.String(50))
 
-    # Define relationship with Breed (with backref set on Breed model)
     breeds = db.relationship('Breed', secondary='pet_breed', backref='pet_breeds')
 
 
@@ -93,7 +91,6 @@ class Species(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(50), nullable=False)
 
-    # Relationship with Breed
     breeds = db.relationship('Breed', backref='species_relation', lazy=True)
 
 class Breed(db.Model):
@@ -101,9 +98,7 @@ class Breed(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(50), nullable=False)
 
-    # Relationship with Species
     species_id = db.Column(db.Integer, db.ForeignKey('species.id'), nullable=False)
-    # Removed backref here to avoid conflict
 
 class Cart(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -117,7 +112,7 @@ class Order(db.Model):
     user = db.relationship('User', backref='orders')
     pets = db.relationship('Pet', secondary='order_pet', backref='orders')
     order_date = db.Column(db.DateTime, default=datetime.utcnow)
-    status = db.Column(db.String(20), default='Pending')  # Pending / Accepted / Rejected
+    status = db.Column(db.String(20), default='Pending')  
 
 order_pet = db.Table('order_pet',
     db.Column('order_id', db.Integer, db.ForeignKey('order.id')),
@@ -138,7 +133,6 @@ class ContactMessage(db.Model):
     def __repr__(self):
         return f"Message from {self.name} - {self.email}"
 
-# Route to display contact form
 @app.route('/contact', methods=['GET', 'POST'])
 def contact():
     if request.method == 'POST':
@@ -147,16 +141,14 @@ def contact():
         subject = request.form['subject']
         message = request.form['message']
 
-        # Create a new ContactMessage object and save it to the database
         new_message = ContactMessage(name=name, email=email, subject=subject, message=message)
         db.session.add(new_message)
         db.session.commit()
 
-        return redirect(url_for('home'))  # Redirect to view messages page
+        return redirect(url_for('home'))  
 
-    return render_template('contactus.html')  # GET method to render the contact form
+    return render_template('contactus.html') 
 
-# Route to view all messages
 
 @app.route('/api/messages', methods=['GET'])
 def api_get_messages():
@@ -174,7 +166,6 @@ def api_get_messages():
     ]
     return jsonify(data), 200
 
-# API: Post new message
 @app.route('/api/messages', methods=['POST'])
 def api_post_message():
     data = request.get_json()
@@ -205,9 +196,9 @@ with app.app_context():
     db.create_all()
 
     admin_email = "admin@gmail.com"
-    if not User.query.filter_by(email=admin_email).first():  # Check specific email
+    if not User.query.filter_by(email=admin_email).first(): 
         admin_user = User(name="Admin", email=admin_email, mobile="1234567890", role="admin")
-        admin_user.set_password("admin123")  # Hash the password
+        admin_user.set_password("admin123")  
         db.session.add(admin_user)
         db.session.commit()
         print(f"Admin user created: {admin_email} | Password: admin123")
@@ -320,10 +311,8 @@ def add_pet():
         image = request.form.get('image')
         pet_type = request.form.get('type')
 
-        # Infer category
         breed = Breed.query.get(int(breed_id))
 
-        # Infer category using the related species
         species_name = breed.species_relation.name.lower()
         category = "dog" if "dog" in species_name else "cat"
 
@@ -342,7 +331,6 @@ def add_pet():
         flash(f'{name} has been added successfully!', 'success')
         return redirect(url_for('admin_dashboard'))
 
-    # Pass all registered breeds to the template
     breeds = Breed.query.all()
     return render_template('registerpet.html', breeds=breeds)
 
@@ -358,14 +346,14 @@ def addbreed():
             flash('Both breed name and species name are required.', 'warning')
             return redirect(url_for('addbreed'))
 
-        # Check if species already exists, if not, create it
+        
         species = Species.query.filter_by(name=species_name).first()
         if not species:
             species = Species(name=species_name)
             db.session.add(species)
             db.session.commit()
 
-        # Add new breed
+       
         new_breed = Breed(name=name, species_id=species.id)
         db.session.add(new_breed)
         db.session.commit()
@@ -373,7 +361,7 @@ def addbreed():
         flash(f"Breed '{name}' added successfully under species '{species_name}'!", 'success')
         return redirect(url_for('addbreed'))
 
-    # GET request - fetch all breeds with their species to display
+    
     breeds = Breed.query.all()
     return render_template('addbreed.html', breeds=breeds)
 
@@ -415,7 +403,7 @@ def delete_breed(breed_id):
 
     if request.method == 'POST':
         try:
-            # Remove the breed from all associated pets
+            
             for pet in breed.pet_breeds:
                 pet.breeds.remove(breed)
 
@@ -575,7 +563,7 @@ def foundation():
 def add_to_cart(pet_id):
     pet = Pet.query.get_or_404(pet_id)
     
-    # Check if pet is already in the cart
+    
     existing_item = Cart.query.filter_by(user_id=current_user.id, pet_id=pet_id).first()
     if existing_item:
         flash('This pet is already in your cart!', 'warning')
@@ -631,7 +619,7 @@ def adopt_all_pets():
         db.session.add(new_order)
 
         for pet in pets:
-            pet.is_available = False  # Mark as adopted
+            pet.is_available = False  
 
         for item in cart_items:
             db.session.delete(item)
@@ -689,13 +677,13 @@ def reject_order(order_id):
 @login_required
 def api_get_orders():
     try:
-        print(f"Current User: {current_user}")  # Debug: Check if current_user is loaded
+        print(f"Current User: {current_user}")  
         if current_user.is_admin:
             orders = Order.query.order_by(Order.order_date.desc()).all()
         else:
             orders = Order.query.filter_by(user_id=current_user.id).order_by(Order.order_date.desc()).all()
 
-        print(f"Fetched Orders: {orders}")  # Debug: Check if orders are fetched
+        print(f"Fetched Orders: {orders}")  
         return jsonify([
             {
                 "id": order.id,
