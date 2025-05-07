@@ -1,0 +1,137 @@
+{% extends "base.html" %}
+
+{% block title %} Add Pet {% endblock %}
+
+{% block head %}
+<style>
+    body {
+        background-color: #2e1a47;
+        /* Deep lavender-purple */
+        font-family: 'Poppins', sans-serif;
+        color: #e5d4ff;
+        /* Soft lavender text */
+    }
+
+    .container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin-top: 250px;
+        
+    }
+
+    .form-container {
+        background: #432874;
+        /* Darker purple background */
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.3);
+        max-width: 600px;
+        width: 100%;
+        text-align: center;
+        border: 2px solid #9f7aea;
+        /* Lavender border */
+    }
+
+    h2 {
+        color: #c084fc;
+        /* Soft pastel purple */
+        margin-bottom: 20px;
+    }
+
+    .container a{
+        text-decoration: none;
+        color: #9f7aea;
+        font-size: 20px;
+    }
+
+    .container a:hover{
+        text-decoration: underline #9f7aea;
+    }
+
+    label {
+        display: block;
+        text-align: left;
+        font-weight: bold;
+        margin-top: 10px;
+        color: #e9d5ff;
+        /* Light lavender text */
+    }
+
+    input,
+    select {
+        width: 100%;
+        padding: 10px;
+        margin-top: 5px;
+        border: 1px solid #7c3aed;
+        border-radius: 8px;
+        font-size: 16px;
+        background-color: #311f49;
+        /* Darker purple */
+        color: #e5d4ff;
+    }
+
+    input:focus,
+    select:focus {
+        outline: none;
+        border-color: #c084fc;
+        box-shadow: 0 0 5px rgba(192, 132, 252, 0.6);
+    }
+
+    button {
+        width: 100%;
+        background-color: #7c3aed;
+        /* Deep royal purple */
+        color: white;
+        border: none;
+        padding: 12px;
+        margin-top: 20px;
+        border-radius: 8px;
+        font-size: 18px;
+        cursor: pointer;
+        transition: background 0.3s ease;
+        font-weight: bold;
+    }
+
+    button:hover {
+        background-color: #5b21b6;
+        /* Darker shade on hover */
+    }
+</style>
+{% endblock %}
+
+{% block main_block %}
+<div class="container">
+    <div class="form-container">
+        <h2>Add a New Pet</h2>
+        <form method="POST">
+            <label>Name:</label>
+            <input type="text" name="name" required>
+
+            <label>Age:</label>
+            <input type="text" name="age" required>
+
+            <label>Breed:</label>
+            <input type="text" name="breed" required>
+
+            <label>Distance:</label>
+            <input type="text" name="distance" required>
+
+            <label>Image URL:</label>
+            <input type="text" name="image_url" required>
+
+            <label>Category:</label>
+            <select name="category" required>
+                <option value="dog">Dog</option>
+                <option value="cat">Cat</option>
+            </select>
+
+            <button type="submit">Add Pet</button>
+        </form>
+        <br>
+        <a href="{{ url_for('admin_dashboard') }}">Back to Dashboard</a>
+
+    </div>
+</div>
+{% endblock %}

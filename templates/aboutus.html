@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title_block %} About Us {% endblock %}
+{% block title %} About Us {% endblock %}
 
 {% block head %}
 <style>
@@ -9,7 +9,7 @@
         margin: 0;
         padding: 0;
         background-color: #E5C0D1;
-        background-color:#802b9d;
+        background-color:#3e0950;
         color: white;
     }
 
@@ -82,7 +82,7 @@
     }
 
     .top1 img {
-        margin-top: 10px;
+        margin-top: 180px;
         width: 100%;
         height: 70vh;
         object-fit: cover;
@@ -90,14 +90,14 @@
 
     .overlay {
         position: absolute;
-        top: 75%;
+        top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
 
         color: white;
 
         text-align: center;
-        
+
         width: 100%;
         max-width: 700px;
     }
@@ -105,7 +105,6 @@
     .overlay h3 {
         margin: 0;
         font-size: 78px;
-        font-weight: bolder;
     }
 
     
@@ -214,10 +213,9 @@
 {% block main_block %}
 
 <div class="top1">
-    <img src="https://rspca.sfo2.cdn.digitaloceanspaces.com/public/Uploads/adopt-a-pet-adopting-a-dog-selecting-your-dog__FocusFillWzE0NzIsNjI0LCJ5IiwxMDFd.jpg" alt="Fluffy Tails">
+    <img src="./static/img3.png" alt="Fluffy Tails">
     <div class="overlay">
-        <h3>About FluffyTails</h3>
-        <h5>"Every rescued pet has a story. Be part of their happy ending."</h5>
+        <h3>About Fluffy Tails</h3>
     </div>
 </div>
 

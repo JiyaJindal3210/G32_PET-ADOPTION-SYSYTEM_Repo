@@ -41,9 +41,8 @@ body{
 .allAbout,
 .ContactUs,
 .AboutUs,
-.login6,
-.register6,
-.signup6 , .orders6 {
+.login,
+.register {
     border: none;
     outline: none;
     padding: 6px;
@@ -63,8 +62,8 @@ body{
 .allAbout a,
 .ContactUs a,
 .AboutUs a,
-.login6 a,
-.register6 a,.signup6 a ,.orders6 a {
+.login a,
+.register a {
     color: #911693;
     text-decoration: none;
 }
@@ -72,8 +71,8 @@ body{
 .allAbout:hover,
 .ContactUs:hover,
 .AboutUs:hover,
-.login6:hover,
-.register6:hover,.signup6:hover , .orders6:hover{
+.login:hover,
+.register:hover {
     font-size: large;
 }
 
@@ -223,17 +222,15 @@ body {
 }
 
 .m1 img{
-    margin-top: 120px;
     margin-left: 0px;
     margin-right:0px;
     width: 1500px;
     height: 550px;
-    opacity: 0.9;
 }
 
 .m1 .text-overlay {
     position: absolute;
-    top: 70%;
+    top: 36%;
     left: 70%; 
     transform: translate(-50%, -50%); 
     color: whitesmoke; 
@@ -255,14 +252,13 @@ body {
 .m2 img{
     margin-left: 0px;
     margin-right:0px;
-    width: 1000px;
+    width: 1080px;
     height: 300px;
 }
 
 .i1 img{
     margin-left: 0px;
     margin-right:0px;
-    margin-top: 150px;
     width: 480px;
     height: 350px;
 }
@@ -550,10 +546,9 @@ body {
     height: 590px;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 420px;
+    gap: 20px;
     padding: 20px;
     background-color: #f5f5f5;
-    
 }
 
 .container3 .card {
@@ -564,7 +559,6 @@ body {
     text-align: center;
     height: 520px;
     margin: 20px;
-    margin-left: 2px;
 }
 
 .card>img {
@@ -639,8 +633,8 @@ body {
 }
 
 .i3 img{
-    /* margin-left: 0px;
-    margin-right:0px; */
+    margin-left: 0px;
+    margin-right:0px;
     width: 780px;
     height: 400px;
 }
@@ -652,7 +646,7 @@ body {
     padding: 20px;
     bottom: 0px;
     font-family: Arial, sans-serif;
-    margin-top: 1000px;
+    margin-top: 100px;
     
 }
 
@@ -662,7 +656,6 @@ body {
     justify-content: center;
     background-color: red;
     padding: 5px;
-    margin-top: 1800px;
 }
 
 .top-bar img {

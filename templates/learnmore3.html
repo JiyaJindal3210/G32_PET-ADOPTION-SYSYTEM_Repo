@@ -1,6 +1,6 @@
 {% extends "base.html" %}
-{% load static %}
-{% block title_block %} Learn More {% endblock %}
+
+{% block title %} Learn More {% endblock %}
 
 {% block head %}
 <style>
@@ -8,24 +8,27 @@ body {
     font-family: 'Poppins', sans-serif;
     margin: 0;
     padding: 0;
-    background: purple; 
+    background: purple; /* Clean white background */
     color: #333;
 }
 
+/* Centered Layout */
 .container {
     max-width: 1100px;
     margin: auto;
     padding: 40px 20px;
 }
 
+/* Main Heading */
 .o div h2 {
     text-align: center;
-    color: #6a0dad; 
+    color: #6a0dad; /* Deep Purple */
     font-weight: bold;
     font-size: 2rem;
     margin-bottom: 20px;
 }
 
+/* Layout - Align content in columns */
 main {
     display: flex;
     flex-wrap: wrap;
@@ -33,9 +36,10 @@ main {
     gap: 30px;
 }
 
+/* Main Article - Larger Box */
 article {
     width: 65%;
-    background: #f9f9f9; 
+    background: #f9f9f9; /* Light Grey */
     padding: 25px;
     border-radius: 12px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -47,10 +51,12 @@ article:hover {
     transform: scale(1.02);
 }
 
+/* Sidebar */
 aside {
     width: 30%;
 }
 
+/* Match & Shelter Boxes */
 .match-box,
 .shelter-box {
     background: #ffffff;
@@ -107,7 +113,9 @@ header {
 
 
 {% block main_block %}
-
+<header>
+    <h1><br> How Old Is A Dog In Human Years?</h1>
+</header>
 
 <main>
     <article>
@@ -246,7 +254,7 @@ header {
                 width="300px">
         </div>
         <div class="shelter-box">
-            <img src="{% static 'images/ADS.jpg' %}" height="400px" width="300px">
+            <img src="./static/ADS.jpg" height="400px" width="300px">
         </div>
         <br><br><br><br><br><br><br><br>
         <div class="match-box">

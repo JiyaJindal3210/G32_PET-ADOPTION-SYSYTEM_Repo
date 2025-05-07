@@ -1,6 +1,6 @@
 {% extends "base.html" %}
-{% load static %}
-{% block title_block %} Learn More {% endblock %}
+
+{% block title %} Learn More {% endblock %}
 
 {% block head %}
 <style>
@@ -24,11 +24,11 @@
         display: flex;
         justify-content: space-between;
         padding: 20px;
-        margin-top: 70px;
+        margin-top: 40px;
     }
 
     article {
-        width: 70%; 
+        width: 70%; /* Adjusted to give more space to the main content */
         background: white;
         padding: 20px;
         border-radius: 10px;
@@ -37,7 +37,7 @@
     }
 
     aside {
-        width: 28%; 
+        width: 28%; /* Adjusted width to make room for the article */
         margin-top: 20px;
     }
 
@@ -121,6 +121,9 @@
 
 
 {% block main_block %}
+<header>
+    <h1><br> How Old Is A Dog In Human Years?</h1>
+</header>
 
 <main>
     <article>
@@ -349,7 +352,7 @@
                 width="300px">
         </div>
         <div class="shelter-box">
-            <img src="{% static 'images/ADS.jpg' %}" height="400px" width="300px">
+            <img src="./static/ADS.jpg" height="400px" width="300px">
         </div>
         <br><br><br><br><br><br><br><br>
         <div class="match-box">
