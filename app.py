@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, request, url_for, flash , abort
+from flask import Flask, render_template, redirect, request, url_for, flash , abort 
 from flask_sqlalchemy import SQLAlchemy
 import os
 from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required, current_user 
@@ -85,7 +85,8 @@ class Pet(db.Model):
     type = db.Column(db.String(50))
 
     # Define relationship with Breed (with backref set on Breed model)
-    breeds = db.relationship('Breed', secondary='pet_breed', backref='pets')
+    breeds = db.relationship('Breed', secondary='pet_breed', backref='pet_breeds')
+
 
 class Species(db.Model):
     __tablename__ = 'species'
@@ -102,7 +103,6 @@ class Breed(db.Model):
 
     # Relationship with Species
     species_id = db.Column(db.Integer, db.ForeignKey('species.id'), nullable=False)
-
     # Removed backref here to avoid conflict
 
 class Cart(db.Model):
@@ -304,7 +304,7 @@ def admin_required(func):
     def wrapper(*args, **kwargs):
         if current_user.role != 'admin':
             flash("Access denied!", "danger")
-            return redirect(url_for('dashboard'))
+            return redirect(url_for('login'))
         return func(*args, **kwargs)
     return wrapper
 
@@ -414,12 +414,25 @@ def delete_breed(breed_id):
     breed = Breed.query.get_or_404(breed_id)
 
     if request.method == 'POST':
-        db.session.delete(breed)
-        db.session.commit()
-        flash(f'Breed "{breed.name}" deleted successfully!', 'success')
-        return redirect(url_for('addbreed'))
+        try:
+            # Remove the breed from all associated pets
+            for pet in breed.pet_breeds:
+                pet.breeds.remove(breed)
+
+            db.session.commit()
+
+            db.session.delete(breed)
+            db.session.commit()
+
+            flash(f'Breed "{breed.name}" deleted successfully!', 'success')
+            return redirect(url_for('addbreed'))
+        except Exception as e:
+            db.session.rollback()
+            flash(f"Error deleting breed: {str(e)}", 'error')
+            return redirect(url_for('addbreed'))
 
     return render_template('delete_breed.html', breed=breed)
+
 
 @app.route('/breed_pet_list/<int:breed_id>')
 @login_required
@@ -531,9 +544,8 @@ def dogPuppiesAdoption():
 
 @app.route('/dogs')
 def dogs():
-    pets = Pet.query.filter_by(category='Dog', is_available=True).all()
-    return render_template('dog.html', pets=dogs)
-
+    pets = Pet.query.filter_by(type='Dog', is_available=True).all()
+    return render_template('dog.html', pets=pets)
 
 @app.route("/behaviordog")
 def behaviordog():
@@ -671,6 +683,49 @@ def reject_order(order_id):
     db.session.commit()
     flash(f"Order #{order.id} has been rejected.", "warning")
     return redirect(url_for('orders'))
+
+
+@app.route('/api/orders', methods=['GET'])
+@login_required
+def api_get_orders():
+    try:
+        print(f"Current User: {current_user}")  # Debug: Check if current_user is loaded
+        if current_user.is_admin:
+            orders = Order.query.order_by(Order.order_date.desc()).all()
+        else:
+            orders = Order.query.filter_by(user_id=current_user.id).order_by(Order.order_date.desc()).all()
+
+        print(f"Fetched Orders: {orders}")  # Debug: Check if orders are fetched
+        return jsonify([
+            {
+                "id": order.id,
+                "user": order.user.name,
+                "status": order.status,
+                "date": order.order_date.strftime('%Y-%m-%d %H:%M'),
+                "pets": [pet.name for pet in order.pets]
+            } for order in orders
+        ])
+    except Exception as e:
+        print(f"Error in /api/orders: {e}")
+        return jsonify({"error": "Internal Server Error"}), 500
+
+@app.route('/api/orders/<int:order_id>/status', methods=['POST'])
+@login_required
+def api_update_order_status(order_id):
+    if not current_user.is_admin:
+        abort(403)
+
+    data = request.get_json()
+    new_status = data.get('status')
+
+    if new_status not in ['Accepted', 'Rejected']:
+        return jsonify({'error': 'Invalid status'}), 400
+
+    order = Order.query.get_or_404(order_id)
+    order.status = new_status
+    db.session.commit()
+
+    return jsonify({'message': f'Order {order_id} updated to {new_status}'}), 200
 
 if __name__ == '__main__':
     app.run(debug=True)

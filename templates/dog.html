@@ -10,7 +10,7 @@
     }
 
     h2.text-center {
-    margin-top: 30px !important;
+        margin-top: 30px !important;
     }
 
     h2 {
@@ -88,41 +88,40 @@
 <div class="container">
     <div class="row">
         {% set has_dogs = false %}
-{% for pet in pets %}
-    {% if pet.type == 'Dog' %}
-        {% set has_dogs = true %}
-        <div class="col-md-4 mb-4">
-            <div class="card h-100 shadow">
-                <img src="{{ pet.image or 'https://via.placeholder.com/150' }}" class="card-img-top"
-                    alt="{{ pet.name }}"
-                    onerror="this.onerror=null;this.src='https://via.placeholder.com/150';"
-                    style="height: 250px; object-fit: cover;">
-                <div class="card-body">
-                    <h5 class="card-title">{{ pet.name }}</h5>
-                    <p class="card-text">
-                        <strong>Gender:</strong> {{ pet.gender }}<br>
-                        <strong>Age:</strong> {{ pet.age }} year{{ 's' if pet.age != 1 else '' }}<br>
-                        <strong>Breeds:</strong>
-                        {% if pet.breeds %}
-                            {% for breed in pet.breeds %}
-                                {{ breed.name }}{% if not loop.last %}, {% endif %}
-                            {% endfor %}
-                        {% else %}
-                            No breed info
-                        {% endif %}
-                    </p>
-                    {% if current_user.is_authenticated and not current_user.is_admin %}
-                    <form action="{{ url_for('add_to_cart', pet_id=pet.id) }}" method="post">
-                        <button type="submit" class="btn btn-primary w-100 mt-2">Add to Cart 🛒</button>
-                    </form>
-                    {% endif %}
+        {% for pet in pets %}
+            {% if pet.type == 'Dog' %}
+                {% set has_dogs = true %}
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100 shadow">
+                        <img src="{{ pet.image or 'https://via.placeholder.com/150' }}" class="card-img-top"
+                            alt="{{ pet.name }}"
+                            onerror="this.onerror=null;this.src='https://via.placeholder.com/150';"
+                            style="height: 250px; object-fit: cover;">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ pet.name }}</h5>
+                            <p class="card-text">
+                                <strong>Gender:</strong> {{ pet.gender }}<br>
+                                <strong>Age:</strong> {{ pet.age }} year{{ 's' if pet.age != 1 else '' }}<br>
+                                <strong>Breeds:</strong>
+                                {% set pet_breeds = pet.breeds %}
+                                {% if pet_breeds %}
+                                    {% for breed in pet_breeds %}
+                                        {{ breed.name }}{% if not loop.last %}, {% endif %}
+                                    {% endfor %}
+                                {% else %}
+                                    No breed info
+                                {% endif %}
+                            </p>
+                            {% if current_user.is_authenticated and not current_user.is_admin %}
+                            <form action="{{ url_for('add_to_cart', pet_id=pet.id) }}" method="post">
+                                <button type="submit" class="btn btn-primary w-100 mt-2">Add to Cart 🛒</button>
+                            </form>
+                            {% endif %}
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
-    {% endif %}
-{% endfor %}
-
-
+            {% endif %}
+        {% endfor %}
     </div>
 </div>
 {% endblock %}
